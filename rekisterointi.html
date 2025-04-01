@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekisteröinti</title>
+</head>
+<body>
+    <h3>Rekisteröinti</h3>
+    <form action="kayttajatunnistus.php" method="post">
+        <table>
+            <tbody>
+                <tr>
+                    <td><label for="kayttaja_tunnus">Käyttäjätunnus:</label></td>
+                    <td><input name="kayttaja_tunnus" id="kayttaja_tunnus" type="text"></td>
+                </tr>
+                <tr>
+                    <td><label for="kayttaja_salasana">Salasana:</label></td>
+                    <td><input name="kayttaja_salasana" id="kayttaja_salasana" type="password"></td>
+                </tr>
+                <tr>
+                    <td><label for="kayttaja_sposti">Sähköposti:</label></td>
+                    <td><input name="kayttaja_sposti" id="kayttaja_sposti" type="email"></td>
+                </tr>
+                <tr>
+                    <td><label for="varmistus">Kirjoita numero 6 kenttään kirjaimin: </label></td>
+                    <td><input name="varmistus" id="varmistus" type="text"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Lähetä"></td>
+                </tr>
+            </tbody>
+            </table>
+    </form>
+    <p>Mikäli sinulla on jo käyttäjätili olemassa, <a href="kirjautuminen.html">Kirjaudu sisään</a>.</p>
+</body>
+</html>
