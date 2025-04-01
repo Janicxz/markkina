@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirjautuminen</title>
+</head>
+<body>
+    <h3>Kirjautuminen</h3>
+    <form action="kayttajatunnistus.php" method="post">
+        <table>
+            <tbody>
+                <tr>
+                    <td><label for="kayttaja_tunnus">Käyttäjätunnus:</label></td>
+                    <td><input name="kayttaja_tunnus" id="kayttaja_tunnus" type="text"></td>
+                </tr>
+                <tr>
+                    <td><label for="kayttaja_salasana">Salasana:</label></td>
+                    <td><input name="kayttaja_salasana" id="kayttaja_salasana" type="password"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Lähetä"></td>
+                    <td><input type="hidden" name="lomaketunnistin" value="0"></td>
+                </tr>
+            </tbody>
+            </table>
+    </form>
+    <p>Et ole vielä rekisteröitynyt? <a href="rekisterointi.html">Luo uusi tili</a>.</p>
+</body>
+</html>
