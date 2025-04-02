@@ -1,19 +1,19 @@
 <?php
 session_start();
 include("kantayhteys.php");
-
+/*
 ini_set("display_errors", 1);
 ini_set("display_startup_errors", 1);
 error_reporting(E_ALL);
-
+*/
 header("Content-Type: text/html; charset=utf-8");
 
 // Asetetaan aikavyöhyke Suomen aikaan
 date_default_timezone_set("Europe/Helsinki");
 $ilmoitus_aika = date("Y-m-d");
 
-$myyja_id = $_SESSION["kayttaja_id"];
 if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
+    $myyja_id = $_SESSION["kayttaja_id"];
     echo "<form action='ilmoitushallinta.php' method='post'>";
     echo "<h3>Lisää ilmoitus</h3>";
     echo "
