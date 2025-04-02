@@ -4,6 +4,9 @@
 $session = session_start();
 // Muodostetaan yhteys tietokantaan
 include("kantayhteys.php");
+
+header("Content-Type: text/html; charset=utf-8");
+
 // Tarkistetaan mistä lomakkeesta tähän sivulle on tultu
 $sivu = $_POST["lomaketunnistin"];
 // Tarkistetaan lomakkeesta tulevat tiedot real_escape_string funktion avulla
@@ -78,7 +81,8 @@ if ($sivu == 2) {
             //echo "Sähköpostiosoite päivitetty. <br>";
         }
         else {
-            echo "Jätit sähköposti kentän tyhjäksi. Kokeile <a href='tiedot.php>uudestaan</a>.";
+            die("Jätit sähköposti kentän tyhjäksi. Kokeile <a href='tiedot.php'>uudestaan</a>.");
+            //echo "Jätit sähköposti kentän tyhjäksi. Kokeile <a href='tiedot.php'>uudestaan</a>.";
         }
     }
     $query = mysqli_query($dbconnect, "SELECT * FROM kayttajat WHERE kayttaja_tunnus = '$kayttaja_tunnus'");
@@ -97,7 +101,7 @@ if ($sivu == 2) {
         else {
             $query = mysqli_query($dbconnect,"UPDATE kayttajat SET kayttaja_salasana='$kayttaja_uusisalasana' WHERE kayttaja_tunnus='$kayttaja_tunnus'");
             vaihdaSahkoposti();
-            
+
             echo "Tietojen muutos onnistui. <br> <a href='index.php'>Palaa etusivulle</a>.";
         }
     }
