@@ -32,6 +32,25 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
             echo "Jätit tietoja täyttämättä. Ole hyvä ja <a href='lisaailmoitus.php'>täytä lomake uudestaan</a>.";
         }
     }
+    if ($sivu == 2) {
+        $ilmoitus_uusilaji = $_POST["ilmoitus_uusilaji"];
+        $ilmoitus_uusinimi = $_POST["ilmoitus_uusinimi"];
+        $ilmoitus_uusikuvaus = $_POST["ilmoitus_uusikuvaus"];
+        $ilmoistus_id = $_POST["ilmoitus_id"];
+
+        if (!empty($ilmoitus_uusilaji) && !empty($ilmoitus_uusinimi)
+        && !empty($ilmoitus_uusikuvaus) && !empty($ilmoistus_id)) {
+            $stmt = mysqli_prepare($dbconnect, "UPDATE ilmoitukset SET ilmoitus_laji = ?, ilmoitus_nimi = ?, ilmoitus_kuvaus = ? WHERE ilmoitus_id = ?");
+            mysqli_stmt_bind_param($stmt, "issi", $ilmoitus_uusilaji, $ilmoitus_uusinimi, $ilmoitus_uusikuvaus, $ilmoistus_id);
+            mysqli_execute($stmt);
+            //mysqli_query($dbconnect, "INSERT INTO ilmoitukset (ilmoitus_laji, ilmoitus_nimi, ilmoitus_kuvaus, ilmoitus_paivays, myyja_id)
+            //VALUES ('$ilmoitus_laji', '$ilmoitus_nimi', '$ilmoitus_kuvaus', '$ilmoitus_paivays', '$myyja_id')");
+            echo "Ilmoituksen muokkaaminen onnistui! Palaa <a href='index.php'>etusivulle</a>.";
+        }
+        else {
+            echo "Jätit tietoja täyttämättä. Ole hyvä ja <a href='lisaailmoitus.php'>täytä lomake uudestaan</a>.";
+        }
+    }
 }
 else {
     echo "Et voi lisätä ilmoituksia, koska et ole kirjautunut sisään! <br>
