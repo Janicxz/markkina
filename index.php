@@ -70,7 +70,7 @@ while ($i < $num) {
 
 
     $poista_ilmoitus_tr = "";
-    if ((isset($_SESSION["kayttaja_id"]) && $_SESSION["kayttaja_id"]) == $myyja_id ||
+    if ((isset($_SESSION["kayttaja_id"]) && $_SESSION["kayttaja_id"] == $myyja_id) ||
         (isset($_SESSION["kayttaja_taso"]) && $_SESSION["kayttaja_taso"] == "admin")) {
         $poista_ilmoitus_tr = "
         <tr>
