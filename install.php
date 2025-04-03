@@ -43,7 +43,7 @@ ALTER TABLE `kayttajat`
             mysqli_free_result($result);
         }
     } while (mysqli_next_result($dbconnect));
-    echo "Tietokanta luotiin onnistuneesti! <br> <b>Muista muuttaa INSTALL_DATABASE = false asentamisen jälkeen install.php tiedostossa!</b>";
+    echo "Tietokanta luotiin onnistuneesti! <br> <b>Muista muuttaa INSTALL_DATABASE = false</b> asentamisen jälkeen install.php tiedostossa! tai <b>POISTA install.php tiedosto!</b>";
 }
 else {
     echo "Tietokannan luominen epäonnistui!";
