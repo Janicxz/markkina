@@ -11,5 +11,5 @@ try {
 if (!$dbconnect) {
     die("Yhdistäminen tietokantaan epäonnistui:" . mysqli_connect_error() . "<br>");
 }
-echo "Yhdistettiin tietokantaan onnistuneesti<br>";
+//echo "Yhdistettiin tietokantaan onnistuneesti<br>";
 ?>
