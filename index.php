@@ -26,6 +26,14 @@ else {
     <a href='rekisterointi.html'>rekisteröidy palveluun</a>.";
 }
 
+echo "<h3>Ilmoitukset:</h3>";
+
+echo "<p>Hae ilmoituksia:<br> 
+    <form action='haeilmoitus.php' method='post'>
+        <input name='haku' type='text'>
+        <input type='submit' name='submit' value='Hae'>
+    </form></p>";
+
 // Ilmoitusten tuonti
 $query = "SELECT * FROM ilmoitukset INNER JOIN kayttajat ON ilmoitukset.myyja_id = kayttajat.kayttaja_id";
 $result = mysqli_query($dbconnect, $query);
@@ -97,6 +105,9 @@ while ($i < $num) {
                 </tr>
                 <tr>
                     <td>Myyjä: $myyja_tunnus</td>
+                </tr>
+                <tr>
+                    <td><a href='mailto:$myyja_sahkoposti'>$myyja_sahkoposti</a></td>
                 </tr>
                 $poista_ilmoitus_tr
             </table>
