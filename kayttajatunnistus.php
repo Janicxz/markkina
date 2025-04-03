@@ -13,10 +13,15 @@ $sivu = $_POST["lomaketunnistin"];
 // Funktio lisää kenoviivat vaarallisten kirjainten eteen ettei sql injektio olisi mahdollista
 $kayttaja_tunnus = mysqli_real_escape_string($dbconnect, $_POST["kayttaja_tunnus"]);
 $kayttaja_salasana = mysqli_real_escape_string($dbconnect, $_POST["kayttaja_salasana"]);
+// Hashataan käyttäjän salasana MD5:lla, ei turvallinen!
+//$kayttaja_salasana = md5($kayttaja_salasana);
 
 // Kutsuttu rekisteröitymislomakkeesta
 if ($sivu == 0) {
     $kayttaja_sposti = $dbconnect->real_escape_string($_POST["kayttaja_sposti"]);
+    // Toteutetaan salasanan hash password_hash funktion avulla, tämä myös suolaa salasanan 
+    $kayttaja_salasana = password_hash($kayttaja_salasana, PASSWORD_DEFAULT);
+
     $varmistus = $_POST["varmistus"];
     if (
         $kayttaja_sposti == "" || $varmistus != "kuusi" ||
@@ -43,19 +48,22 @@ if ($sivu == 1) {
     if ($kayttaja_tunnus == "" || $kayttaja_salasana == "") {
         die("Jätit tietoja täyttämättä. Ole hyvä ja <a href='kirjautuminen.html'>täytä lomake uudelleen.</a>");
     }
-    $query = mysqli_query($dbconnect, "SELECT * FROM kayttajat WHERE kayttaja_tunnus = '$kayttaja_tunnus' AND kayttaja_salasana = '$kayttaja_salasana'");
-    // Käyttäjtunnusta ei löydy tai salasana ei täsmää
+        // Käytetään tässä password_verify
+    $query = mysqli_query($dbconnect, "SELECT * FROM kayttajat WHERE kayttaja_tunnus = '$kayttaja_tunnus'");
+    // Käyttäjtunnusta ei löydy
     if (mysqli_num_rows($query) == 0) {
         echo ("Kirjautuminen ei onnistunut. Käyttäjätunnus tai salasana väärin. <a href='kirjautuminen.html'>Kirjaudu sisään uudelleen</a>.<br>
             Jos sinulla ei ole vielä käyttäjätunnusta <a href='rekisterointi.html'>rekisteröidy tästä</a>.");
         return;
     }
-    // Käyttäjätunnus ja salasana oikein
-    if (mysqli_num_rows($query) !== 0) {
-        echo "Kirjautuminen onnistui! <br> <a href='index.php'>Siirry palveluun</a>";
-    }
 
     $tiedot = mysqli_fetch_array($query) or die(mysqli_error($dbconnect));
+    // Tarkistetaan onko salasana oikein
+    if (!password_verify($kayttaja_salasana,$tiedot["kayttaja_salasana"])) {
+        echo ("Kirjautuminen ei onnistunut. Käyttäjätunnus tai salasana väärin. <a href='kirjautuminen.html'>Kirjaudu sisään uudelleen</a>.<br>
+            Jos sinulla ei ole vielä käyttäjätunnusta <a href='rekisterointi.html'>rekisteröidy tästä</a>.");
+        return;
+    }
     // Tallennetaan käyttäjän tiedon sessioniin
     $_SESSION["kayttaja_id"] = $tiedot['kayttaja_id'];
     $_SESSION["kayttaja_taso"] = $tiedot['kayttaja_taso'];
@@ -63,10 +71,18 @@ if ($sivu == 1) {
     $_SESSION["kayttaja_salasana"] = $tiedot['kayttaja_salasana'];
     $_SESSION["kayttaja_sahkoposti"] = $tiedot['kayttaja_sahkoposti'];
     $_SESSION['LOGGEDIN'] = 1;
+
+    // Käyttäjätunnus ja salasana oikein
+    if (mysqli_num_rows($query) !== 0) {
+        echo "Kirjautuminen onnistui! <br> <a href='index.php'>Siirry palveluun</a>";
+    }
 }
 // Muutetaan käyttäjän tietoja
 if ($sivu == 2) {
     $kayttaja_uusisalasana = mysqli_real_escape_string($dbconnect,$_POST["kayttaja_uusisalasana"]);
+    // "Suojataan" käyttäjän salasana md5 hashilla. Ei turvallinen!
+    //$kayttaja_uusisalasana = md5($kayttaja_uusisalasana);
+    $kayttaja_uusisalasana = password_hash($kayttaja_uusisalasana, PASSWORD_DEFAULT);
     function vaihdaSahkoposti () {
         // Käyttäjän antama uusi sposti
         $kayttaja_uusisahkoposti = $_POST["kayttaja_uusisahkoposti"];
