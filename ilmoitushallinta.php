@@ -2,10 +2,12 @@
 session_start();
 include("kantayhteys.php");
 
+// DEBUG
+/*
 ini_set("display_errors", 1);
 ini_set("display_startup_errors", 1);
 error_reporting(E_ALL);
-
+*/
 header("Content-Type: text/html; charset=utf-8");
 
 if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
@@ -36,16 +38,31 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
         $ilmoitus_uusilaji = $_POST["ilmoitus_uusilaji"];
         $ilmoitus_uusinimi = $_POST["ilmoitus_uusinimi"];
         $ilmoitus_uusikuvaus = $_POST["ilmoitus_uusikuvaus"];
-        $ilmoistus_id = $_POST["ilmoitus_id"];
+        $ilmoitus_id = $_POST["ilmoitus_id"];
 
         if (!empty($ilmoitus_uusilaji) && !empty($ilmoitus_uusinimi)
-        && !empty($ilmoitus_uusikuvaus) && !empty($ilmoistus_id)) {
-            $stmt = mysqli_prepare($dbconnect, "UPDATE ilmoitukset SET ilmoitus_laji = ?, ilmoitus_nimi = ?, ilmoitus_kuvaus = ? WHERE ilmoitus_id = ?");
-            mysqli_stmt_bind_param($stmt, "issi", $ilmoitus_uusilaji, $ilmoitus_uusinimi, $ilmoitus_uusikuvaus, $ilmoistus_id);
-            mysqli_execute($stmt);
-            //mysqli_query($dbconnect, "INSERT INTO ilmoitukset (ilmoitus_laji, ilmoitus_nimi, ilmoitus_kuvaus, ilmoitus_paivays, myyja_id)
-            //VALUES ('$ilmoitus_laji', '$ilmoitus_nimi', '$ilmoitus_kuvaus', '$ilmoitus_paivays', '$myyja_id')");
-            echo "Ilmoituksen muokkaaminen onnistui! Palaa <a href='index.php'>etusivulle</a>.";
+        && !empty($ilmoitus_uusikuvaus) && !empty($ilmoitus_id)) {
+    
+                // Haetaan poistettavan ilmoituksen tiedot
+            $stmt = mysqli_prepare($dbconnect, "SELECT kayttajat.kayttaja_id FROM ilmoitukset INNER JOIN kayttajat ON ilmoitukset.myyja_id = kayttajat.kayttaja_id  WHERE ilmoitus_id = ?");
+            mysqli_stmt_bind_param($stmt, "i", $ilmoitus_id);
+            mysqli_stmt_execute($stmt);
+
+            $result = mysqli_stmt_get_result($stmt);
+            $row = mysqli_fetch_assoc($result);
+            mysqli_stmt_close($stmt);
+            // Tarkistetaan ollaanko poistamassa omaa ilmoitusta, tai onko poistaja admin
+            if ($row["kayttaja_id"] == $_SESSION["kayttaja_id"] || $_SESSION["kayttaja_taso"] == "admin") {
+                $stmt = mysqli_prepare($dbconnect, "UPDATE ilmoitukset SET ilmoitus_laji = ?, ilmoitus_nimi = ?, ilmoitus_kuvaus = ? WHERE ilmoitus_id = ?");
+                mysqli_stmt_bind_param($stmt, "issi", $ilmoitus_uusilaji, $ilmoitus_uusinimi, $ilmoitus_uusikuvaus, $ilmoitus_id);
+                mysqli_execute($stmt);
+                //mysqli_query($dbconnect, "INSERT INTO ilmoitukset (ilmoitus_laji, ilmoitus_nimi, ilmoitus_kuvaus, ilmoitus_paivays, myyja_id)
+                //VALUES ('$ilmoitus_laji', '$ilmoitus_nimi', '$ilmoitus_kuvaus', '$ilmoitus_paivays', '$myyja_id')");
+                echo "Ilmoituksen muokkaaminen onnistui! Palaa <a href='index.php'>etusivulle</a>.";
+            }
+            else {
+                echo "Ilmoituksen muokkaaminen epäonnistui! Palaa <a href='index.php'>etusivulle</a>.";
+            }
         }
         else {
             echo "Jätit tietoja täyttämättä. Ole hyvä ja <a href='lisaailmoitus.php'>täytä lomake uudestaan</a>.";
