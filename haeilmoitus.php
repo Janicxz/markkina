@@ -99,6 +99,9 @@ if (isset($_POST["submit"]) && (!empty($haku))) {
                     <tr>
                         <td>Myyjä: $myyja_tunnus</td>
                     </tr>
+                    <tr>
+                        <td><a href='mailto:$myyja_sahkoposti'>$myyja_sahkoposti</a></td>
+                    </tr>
                     $poista_ilmoitus_tr
                 </table>
             </p>
