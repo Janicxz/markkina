@@ -19,7 +19,7 @@ $kayttaja_salasana = mysqli_real_escape_string($dbconnect, $_POST["kayttaja_sala
 // Kutsuttu rekisteröitymislomakkeesta
 if ($sivu == 0) {
     $kayttaja_sposti = $dbconnect->real_escape_string($_POST["kayttaja_sposti"]);
-    // Toteutetaan salasanan hash password_hash funktion avulla, tämä myös suolaa salasanan 
+    // Toteutetaan salasanan hash password_hash funktion avulla, tämä myös suolaa salasanan
     $kayttaja_salasana = password_hash($kayttaja_salasana, PASSWORD_DEFAULT);
 
     $varmistus = $_POST["varmistus"];
@@ -111,7 +111,8 @@ if ($sivu == 2) {
     }
     // muutetaan sähköposti ja salasana
     else {
-        if ($tiedot["kayttaja_salasana"] !== $kayttaja_salasana || empty($kayttaja_uusisalasana)) {
+        $salasanaOikein = password_verify($kayttaja_salasana, $tiedot["kayttaja_salasana"]);
+        if (!$salasanaOikein || empty($kayttaja_uusisalasana)) {
             echo "Syötit väärän salasanan tai jätit tietoja täyttämättä. Kokeile <a href='tiedot.php'>uudestaan</a>.";
         }
         else {
