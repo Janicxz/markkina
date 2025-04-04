@@ -10,22 +10,7 @@ include("kantayhteys.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markkinapaikka</title>
 
-    <style>
-        input {
-            margin-bottom: 10px;
-        }
-        table {
-            border: 1px solid rgba(0, 0, 0, 0.3);
-            border-radius: 5px;
-            margin-bottom: 10px;
-            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
-        }
-        .nappirivi {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h2>Osto- ja myyntipalsta</h2>
