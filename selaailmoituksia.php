@@ -32,7 +32,9 @@ $sivujaYhteensa = ceil($result["yhteensa"] / $ilmoituksiaSivulla);
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="ilmoitukset">
+    
+    <br> Palaa takaisin <a href='index.php'>etusivulle</a>.
+    <div id="ilmoitukset"> 
         <h2>Ilmoitukset:</h2>
         <?php
                 
@@ -121,7 +123,6 @@ $sivujaYhteensa = ceil($result["yhteensa"] / $ilmoituksiaSivulla);
                 echo "<a href='selaailmoituksia.php?sivu=$seuraavaSivu'> > </> ";
                 echo "<a href='selaailmoituksia.php?sivu=$sivujaYhteensa'> >> </> ";
             }
-            echo "<br> Palaa takaisin <a href='index.php'>etusivulle</a>.";
         ?>
     </div>
 </body>
