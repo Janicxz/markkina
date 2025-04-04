@@ -1,3 +1,5 @@
+
+
 <?php
 session_start();
 include("kantayhteys.php");
@@ -8,7 +10,7 @@ ini_set("display_errors", 1);
 ini_set("display_startup_errors", 1);
 error_reporting(E_ALL);
 */
-header("Content-Type: text/html; charset=utf-8");
+//header("Content-Type: text/html; charset=utf-8");
 
 // Asetetaan aikavyöhyke Suomen aikaan
 date_default_timezone_set("Europe/Helsinki");
@@ -16,19 +18,31 @@ date_default_timezone_set("Europe/Helsinki");
 if (isset($_POST["haku"])) {
     $haku = mysqli_real_escape_string($dbconnect, $_POST["haku"]);
 }
-echo "<h3>Haun tulokset:</h3><br>
-        <p>
-            <form action='haeilmoitus.php' method='post'>
-                <input name='haku' type='text'>
-                <input type='submit' name='submit' value='Hae'>
-            </form>
-        </p>";
+?>
+
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hae ilmoitus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <?php
+    echo "<h3>Haun tulokset:</h3><br>
+    <p>
+        <form action='haeilmoitus.php' method='post'>
+            <input name='haku' type='text'>
+            <input type='submit' name='submit' value='Hae'>
+        </form>
+    </p>";
 
 if (isset($_POST["submit"]) && (!empty($haku))) {
     $query=("SELECT * FROM ilmoitukset INNER JOIN kayttajat ON
     ilmoitukset.myyja_id=kayttajat.kayttaja_id WHERE ilmoitus_kuvaus LIKE '%".$haku."%' OR
     ilmoitus_nimi LIKE '%".$haku."%'");
-    
+
     $result = mysqli_query($dbconnect, $query);
     $num = mysqli_num_rows($result);
 
@@ -114,7 +128,9 @@ if (isset($_POST["submit"]) && (!empty($haku))) {
     }
 }
 else {
-    echo "Syötä hakusana yllä olevaan kenttään";
+echo "Syötä hakusana yllä olevaan kenttään";
 }
 echo "<br>(<a href='haeilmoitus.php'>Tyhjennä haku</a>)-(<a href='index.php'>Palaa etusivulle</a>)";
-?>
+    ?>
+</body>
+</html>
