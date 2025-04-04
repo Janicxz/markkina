@@ -8,19 +8,22 @@ error_reporting(E_ALL);
 
 // Jos sivunumeroa ei ole pyydetty, asetetaan se oletusarvona 1
 $sivuNumero = (!isset($_GET["sivu"])) ? 1: (int)$_GET["sivu"];
-/*if (!isset($_GET["sivu"])) {
-    $sivuNumero = 1;
-}
-else {
-    $sivuNumero = $_GET["sivu"];
-}*/
+
 // Kuinka monta ilmoitusta sivulla näytetään
 $ilmoituksiaSivulla = 5;
-$hakuAlku = ($sivuNumero-1) * $ilmoituksiaSivulla;
 
 $query = "SELECT COUNT(*) as yhteensa FROM ilmoitukset";
 $result = mysqli_fetch_assoc(mysqli_query($dbconnect, $query));
 $sivujaYhteensa = ceil($result["yhteensa"] / $ilmoituksiaSivulla);
+// Jos pyydetty sivu on suurempi kuin sivuja yhteensä, rajataan se viimeiseen sivuun
+if ($sivuNumero > $sivujaYhteensa) {
+    $sivuNumero = $sivujaYhteensa;
+}
+// Jos pyydettiin alempaa sivua kuin 1, asetetaan näytettävä sivu 1.
+if ($sivuNumero < 1) {
+    $sivuNumero = 1;
+}
+$hakuAlku = ($sivuNumero-1) * $ilmoituksiaSivulla;
 ?>
 
 <!DOCTYPE html>
@@ -33,13 +36,13 @@ $sivujaYhteensa = ceil($result["yhteensa"] / $ilmoituksiaSivulla);
 </head>
 <body>
     
-    <br> Palaa takaisin <a href='index.php'>etusivulle</a>.
+    <br> (<a href='index.php'>Palaa etusivulle</a>).
     <div id="ilmoitukset"> 
         <h2>Ilmoitukset:</h2>
         <?php
                 
             // Ilmoitusten tuonti
-            $query = "SELECT * FROM ilmoitukset INNER JOIN kayttajat ON ilmoitukset.myyja_id = kayttajat.kayttaja_id LIMIT $hakuAlku, $ilmoituksiaSivulla";
+            $query = "SELECT * FROM ilmoitukset INNER JOIN kayttajat ON ilmoitukset.myyja_id = kayttajat.kayttaja_id  ORDER BY ilmoitukset.ilmoitus_id DESC LIMIT $hakuAlku, $ilmoituksiaSivulla";
             $result = mysqli_query($dbconnect, $query);
             
             // Lisätään kaikki ilmoitukset
@@ -111,18 +114,25 @@ $sivujaYhteensa = ceil($result["yhteensa"] / $ilmoituksiaSivulla);
                 ";
             }
             echo "<br>";
-            // Sivujen navigointi
+            // Sivujen navigointi painikkeet
             if ($sivuNumero != 1) {
                 $edellinenSivu = $sivuNumero-1;
-                echo "<a href='selaailmoituksia.php?sivu=1'> << </> ";
-                echo "<a href='selaailmoituksia.php?sivu=$edellinenSivu'> < </> ";
+                echo "<a href='selaailmoituksia.php?sivu=1'> << </a> ";
+                echo "<a href='selaailmoituksia.php?sivu=$edellinenSivu'> < </a> ";
             }
-            echo "<a href='selaailmoituksia.php?sivu=$sivuNumero'>Sivu $sivuNumero</> "; 
+            echo "<a href='selaailmoituksia.php?sivu=$sivuNumero'>Sivu $sivuNumero</a> "; 
             if ($sivuNumero != $sivujaYhteensa) {
                 $seuraavaSivu = $sivuNumero+1;
-                echo "<a href='selaailmoituksia.php?sivu=$seuraavaSivu'> > </> ";
-                echo "<a href='selaailmoituksia.php?sivu=$sivujaYhteensa'> >> </> ";
+                echo "<a href='selaailmoituksia.php?sivu=$seuraavaSivu'> > </a> ";
+                echo "<a href='selaailmoituksia.php?sivu=$sivujaYhteensa'> >> </a> ";
             }
+            echo "
+            <br>
+            <form action='selaailmoituksia.php' method='get'>
+                <label for='sivu'>Sivunumero:</label>
+                <input type='number' name='sivu' id='sivu' min='1' max='$sivujaYhteensa' value='$sivuNumero'>
+                <input type='submit' value='Siirry'>
+            </form>";
         ?>
     </div>
 </body>
