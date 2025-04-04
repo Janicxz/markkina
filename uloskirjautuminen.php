@@ -20,4 +20,7 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION['LOGGEDIN'] == 1) {
 
     echo "Uloskirjautuminen onnistui! <a href='kirjautuminen.html'>Kirjaudu sisään</a> tai <a href='index.php'>palaa etusivulle</a>.";
 }
+else {
+    echo "Et ole kirjautunut sisään. <a href='kirjautuminen.html'>Kirjaudu sisään</a> tai <a href='index.php'>palaa etusivulle</a>.";
+}
 ?>
