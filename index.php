@@ -28,16 +28,16 @@ include("kantayhteys.php");
 
     echo "<h3>Ilmoitukset:</h3>";
 
-    echo "<p>Hae ilmoituksia:</p><br> 
+    echo "<p>Hae ilmoituksia:</p><br>
         <form action='haeilmoitus.php' method='post'>
             <input name='haku' type='text'>
             <input type='submit' name='submit' value='Hae'>
         </form>";
     echo "
-    <p> <a href='selaailmoituksia.php'>Selaa ilmoituksia</a> </p>";
+    <p>(<a href='selaailmoituksia.php'>Selaa ilmoituksia</a>)</p>";
 
-    // Ilmoitusten tuonti
-    $query = "SELECT * FROM ilmoitukset INNER JOIN kayttajat ON ilmoitukset.myyja_id = kayttajat.kayttaja_id";
+    // Ilmoitusten tuonti, valitaan 5 uusinta ilmoitusta (suurimman ilmoitus_id:n mukaan)
+    $query = "SELECT * FROM ilmoitukset INNER JOIN kayttajat ON ilmoitukset.myyja_id = kayttajat.kayttaja_id ORDER BY ilmoitukset.ilmoitus_id DESC LIMIT 5";
     $result = mysqli_query($dbconnect, $query);
 
     if (!$result) {
