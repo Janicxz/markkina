@@ -9,7 +9,7 @@ include("kantayhteys.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markkinapaikka</title>
-    
+
     <style>
         input {
             margin-bottom: 10px;
@@ -30,9 +30,6 @@ include("kantayhteys.php");
 <body>
     <h2>Osto- ja myyntipalsta</h2>
     <?php
-
-    //echo "<h2>Osto- ja myyntipalsta</h2>";
-
     if (isset($_SESSION['LOGGEDIN']) && $_SESSION['LOGGEDIN'] == 1) {
         echo "<p>Tervetuloa käyttämään palvelua " . $_SESSION["kayttaja_tunnus"] . "!</p><br>";
 

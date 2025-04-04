@@ -50,7 +50,7 @@ if ($sivu == 1) {
     }
         // Käytetään tässä password_verify
     $query = mysqli_query($dbconnect, "SELECT * FROM kayttajat WHERE kayttaja_tunnus = '$kayttaja_tunnus'");
-    // Käyttäjtunnusta ei löydy
+    // Käyttäjätunnusta ei löydy
     if (mysqli_num_rows($query) == 0) {
         echo ("Kirjautuminen ei onnistunut. Käyttäjätunnus tai salasana väärin. <a href='kirjautuminen.html'>Kirjaudu sisään uudelleen</a>.<br>
             Jos sinulla ei ole vielä käyttäjätunnusta <a href='rekisterointi.html'>rekisteröidy tästä</a>.");
