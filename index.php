@@ -33,6 +33,8 @@ include("kantayhteys.php");
             <input name='haku' type='text'>
             <input type='submit' name='submit' value='Hae'>
         </form>";
+    echo "
+    <p> <a href='selaailmoituksia.php'>Selaa ilmoituksia</a> </p>";
 
     // Ilmoitusten tuonti
     $query = "SELECT * FROM ilmoitukset INNER JOIN kayttajat ON ilmoitukset.myyja_id = kayttajat.kayttaja_id";
