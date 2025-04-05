@@ -8,6 +8,7 @@ error_reporting(E_ALL);
 
 // Jos sivunumeroa ei ole pyydetty, asetetaan se oletusarvona 1
 $sivuNumero = (!isset($_GET["sivu"])) ? 1: (int)$_GET["sivu"];
+$naytaVainOmat =(isset($_GET["naytaomat"]) && $_GET["naytaomat"] == 1) ? true : false;
 
 // Kuinka monta ilmoitusta sivulla näytetään
 $ilmoituksiaSivulla = 5;
@@ -38,11 +39,28 @@ $hakuAlku = ($sivuNumero-1) * $ilmoituksiaSivulla;
     
     <br> (<a href='index.php'>Palaa etusivulle</a>).
     <div id="ilmoitukset"> 
-        <h2>Ilmoitukset:</h2>
+        <h2>
+            <?php
+            if ($naytaVainOmat) {
+                echo "Omat ilmoitukset:";
+            }
+            else {
+                echo "Ilmoitukset:";
+            }
+            ?>
+          </h2>
         <?php
-                
+            
             // Ilmoitusten tuonti
-            $query = "SELECT * FROM ilmoitukset INNER JOIN kayttajat ON ilmoitukset.myyja_id = kayttajat.kayttaja_id  ORDER BY ilmoitukset.ilmoitus_id DESC LIMIT $hakuAlku, $ilmoituksiaSivulla";
+            $query = "SELECT * FROM ilmoitukset INNER JOIN kayttajat ON ilmoitukset.myyja_id = kayttajat.kayttaja_id";
+            // Näytetäänkö vain omat ilmoitukset?
+            if ($naytaVainOmat) {
+                $query .= " WHERE ilmoitukset.myyja_id = $_SESSION[kayttaja_id]"; 
+            }
+            // Jos selataan kaikkia ilmoituksia, rajoitetaan tulosten määrää per sivu
+            else {
+            $query .= " ORDER BY ilmoitukset.ilmoitus_id DESC LIMIT $hakuAlku, $ilmoituksiaSivulla";
+            }
             $result = mysqli_query($dbconnect, $query);
             
             // Lisätään kaikki ilmoitukset
@@ -120,7 +138,7 @@ $hakuAlku = ($sivuNumero-1) * $ilmoituksiaSivulla;
                 echo "<a href='selaailmoituksia.php?sivu=1'> << </a> ";
                 echo "<a href='selaailmoituksia.php?sivu=$edellinenSivu'> < </a> ";
             }
-            echo "<a href='selaailmoituksia.php?sivu=$sivuNumero'>Sivu $sivuNumero</a> "; 
+            echo "<a href='selaailmoituksia.php?sivu=$sivuNumero'>Sivu $sivuNumero</a> ";
             if ($sivuNumero != $sivujaYhteensa) {
                 $seuraavaSivu = $sivuNumero+1;
                 echo "<a href='selaailmoituksia.php?sivu=$seuraavaSivu'> > </a> ";
