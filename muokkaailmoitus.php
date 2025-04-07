@@ -11,6 +11,7 @@ header("Content-Type: text/html; charset=utf-8");
 
 $ilmoitus_id = $_POST["muokkaa_id"];
 
+
 if (!isset($ilmoitus_id)) {
     echo "Muokattavan ilmoituksen id uupuu!";
     return;
