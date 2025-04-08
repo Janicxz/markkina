@@ -34,8 +34,12 @@ include("kantayhteys.php");
             <input type='submit' name='submit' value='Hae'>
         </form>";
     echo "
-    <p>(<a href='selaailmoituksia.php'>Selaa ilmoituksia</a>) - (<a href='selaailmoituksia.php?naytaomat=1'>Omat ilmoitukset</a>)</p>";
-
+    <p>(<a href='selaailmoituksia.php'>Selaa ilmoituksia</a>) </p>";
+    
+    // Näytetään omat ilmoitukset vain kirjautuneille käyttäjille
+    if (isset($_SESSION["LOGGEDIN"]) && $_SESSION["LOGGEDIN"] == 1) {
+        echo "<p>(<a href='selaailmoituksia.php?naytaomat=1'>Omat ilmoitukset</a>)</p>";
+    }
     // Ilmoitusten tuonti, valitaan 5 uusinta ilmoitusta (suurimman ilmoitus_id:n mukaan)
     $query = "SELECT * FROM ilmoitukset INNER JOIN kayttajat ON ilmoitukset.myyja_id = kayttajat.kayttaja_id ORDER BY ilmoitukset.ilmoitus_id DESC LIMIT 5";
     $result = mysqli_query($dbconnect, $query);

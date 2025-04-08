@@ -24,6 +24,10 @@ if ($sivuNumero > $sivujaYhteensa) {
 if ($sivuNumero < 1) {
     $sivuNumero = 1;
 }
+// Käyttäjä ei ole kirjautunut sisään, ei ole omia näytettäviä ilmoituksia
+if (!isset($_SESSION["LOGGEDIN"]) || $_SESSION["LOGGEDIN"] != 1) {
+    $naytaVainOmat = false;
+}
 $hakuAlku = ($sivuNumero-1) * $ilmoituksiaSivulla;
 ?>
 
