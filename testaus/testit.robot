@@ -22,3 +22,15 @@ Uloskirjautuminen Toimii
 Uloskirjautuminen Ei Tapahdu Ilman Sisäänkirjautumista
     Kirjaudu Ulos
     Page Should Contain    Et ole kirjautunut sisään.
+
+Haku Toimii
+    Hae Ilmoitus   Testi
+
+Haku tyhjennys Toimii
+    Hae Ilmoitus    Testi
+    Click link    link=Tyhjennä haku
+    Page Should Not Contain    Hakusanallesi "testi" löytyi ilmoituksia
+Hae Omat Ilmoitukset Toimii
+    Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
+    Hae Omat Ilmoitukset
+    Page Should Contain    Omat ilmoitukset:
