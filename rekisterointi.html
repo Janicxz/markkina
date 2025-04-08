@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rekisteröinti</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        function recaptchaCallback() {
+            document.getElementById("lahetaPainike").disabled = false;
+            console.log("Recaptcha varmistettu, käyttäjä ei ole botti.");
+        }
+    </script>
 </head>
 <body>
     <h3>Rekisteröinti</h3>
@@ -23,11 +30,10 @@
                     <td><input name="kayttaja_sposti" id="kayttaja_sposti" type="email"></td>
                 </tr>
                 <tr>
-                    <td><label for="varmistus">Kirjoita numero 6 kenttään kirjaimin: </label></td>
-                    <td><input name="varmistus" id="varmistus" type="text"></td>
+                    <td><div class="g-recaptcha" data-sitekey="6LcapQ4rAAAAAByajm_hjUeWN_an_4RqPpaG7KPn" data-callback="recaptchaCallback"></div></td>
                 </tr>
                 <tr>
-                    <td><input type="submit" value="Lähetä"></td>
+                    <td><input id="lahetaPainike" type="submit" value="Lähetä" disabled></td>
                     <td><input type="hidden" name="lomaketunnistin" value="0"></td>
                 </tr>
             </tbody>

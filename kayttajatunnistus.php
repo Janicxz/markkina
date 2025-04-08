@@ -5,6 +5,8 @@ $session = session_start();
 // Muodostetaan yhteys tietokantaan
 include("kantayhteys.php");
 
+$RECAPTCHA_SECRET = "";
+
 header("Content-Type: text/html; charset=utf-8");
 
 // Tarkistetaan mistä lomakkeesta tähän sivulle on tultu
@@ -28,13 +30,28 @@ if ($sivu == 0) {
     // Toteutetaan salasanan hash password_hash funktion avulla, tämä myös suolaa salasanan
     $kayttaja_salasana = password_hash($kayttaja_salasana, PASSWORD_DEFAULT);
 
-    $varmistus = $_POST["varmistus"];
     if (
-        $kayttaja_sposti == "" || $varmistus != "kuusi" ||
-        $kayttaja_tunnus == "" || $kayttaja_salasana == ""
+        $kayttaja_sposti == "" ||
+        $kayttaja_tunnus == "" || $kayttaja_salasana == "" ||
+        !isset($_POST["g-recaptcha-response"]) || $_POST["g-recaptcha-response"] == ""
+        /*|| $varmistus != "kuusi"*/ //!isset($_POST["varmistus"])
     ) {
         die("Jätit tietoja täyttämättä. Ole hyvä ja <a href='rekisterointi.html'>täytä lomake uudelleen.</a>");
     }
+    // Käytetään Googlen RECAPTCHA palvelua
+    $recaptchResponse = $_POST["g-recaptcha-response"];
+    $verifyVastaus = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $RECAPTCHA_SECRET . "&response=" . $recaptchResponse);
+    // Tarkistetaan palauttiko googlen recaptcha vastauksen
+    if (!$verifyVastaus) {
+        die("Recaptcha tarkistus epäonnistui. Ole hyvä ja <a href='rekisterointi.html'>täytä lomake uudelleen.</a>");
+    }
+    $verifyVastaus = json_decode($verifyVastaus);
+    // Tarkistetaan onko käyttäjä ihminen
+    if (!$verifyVastaus->success) {
+        die("Recaptcha tarkistus epäonnistui. Ole hyvä ja <a href='rekisterointi.html'>täytä lomake uudelleen.</a>");
+    }
+    
+    //$varmistus = $_POST["varmistus"];
     // Luodaan mysql kysely
     //echo "INSERT INTO kayttajat (kayttaja_id, kayttaja_taso, kayttaja_tunnus, kayttaja_salasana, kayttaja_sahkoposti) VALUES(NULL, 'user', '$kayttaja_tunnus', '$kayttaja_salasana', '$kayttaja_sposti')";
     $query = mysqli_query($dbconnect, "SELECT * FROM kayttajat WHERE kayttaja_tunnus = '$kayttaja_tunnus'");
