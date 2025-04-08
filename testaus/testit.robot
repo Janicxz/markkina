@@ -38,9 +38,20 @@ Hae Omat Ilmoitukset Toimii
 # Testataan ilmoituksen lisäys ja poistaminen
 Lisää Myydään Ilmoitus Toimii
     Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
-    Lisää Myydään Ilmoitus  ilmoitusNimi  ilmoitusSeloste
+    Lisää Myydään Ilmoitus  ilmoitusMyydäänNimi  ilmoitusSeloste
     Page Should Contain    Ilmoituksen lisääminen onnistui!
 Lisää Ostetaan Ilmoitus Toimii
     Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
-    Lisää Ostetaan Ilmoitus  ilmoitusNimi  ilmoitusSeloste Ilmoitus
+    Lisää Ostetaan Ilmoitus  ilmoitusOstetaanNimi  ilmoitusSeloste Ilmoitus
     Page Should Contain    Ilmoituksen lisääminen onnistui!
+Poista Myydään Ilmoitus Toimii
+    Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
+    Poista Ilmoitus  ilmoitusMyydäänNimi
+    Page Should Contain    Ilmoitus poistettu!
+Poista Ostetaan Ilmoitus Toimii
+    Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
+    Poista Ilmoitus  ilmoitusOstetaanNimi
+    Page Should Contain    Ilmoitus poistettu!
+Poista Ilmoitus Ei Toimi Ilman Kirjautumista
+    Go To    ${POISTAILMOITUS URL}
+    Page Should Contain    Ilmoitusta ei voitu poistaa!

@@ -13,6 +13,7 @@ ${HAKU URL}    http://${HOST}/haeilmoitus.php
 ${INDEX URL}    http://${HOST}/index.php
 ${LISAAILMOITUS URL}    http://${HOST}/lisaailmoitus.php
 ${POISTAILMOITUS URL}   http://${HOST}/poistailmoitus.php
+${OMATILMOITUKSET URL}    http://${HOST}/selaailmoituksia.php?naytaomat=1
 
 *** Keywords ***
 Kirjaudu sisään
@@ -55,6 +56,9 @@ Lisää Ostetaan Ilmoitus
     Click button    name=lahetaIlmoitus
 Poista Ilmoitus
     [Documentation]    Poistaa valitun ilmoituksen
+    [Arguments]    ${poistettavIlmoitus}
+    Go To    ${OMATILMOITUKSET URL}
+    Click button    name=Poista ${poistettavIlmoitus}
 
 Aloita Testi
     Open Browser    http://localhost/markkina/    chrome
