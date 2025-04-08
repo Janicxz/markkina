@@ -38,7 +38,7 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
                 <td><textarea name='ilmoitus_kuvaus' rows='5' cols='80'></textarea></td>
             </tr>
             <tr>
-                <td><input type='submit' value='Lähetä'></td>
+                <td><input type='submit' name='lahetaIlmoitus' value='Lähetä'></td>
             </tr>
         </tbody>
     </table>

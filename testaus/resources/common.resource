@@ -1,7 +1,9 @@
 *** Settings ***
+# Käytetään SeleniumLibraryä testien ajamisessa
 Library           SeleniumLibrary
 
 *** Variables ***
+# Muuttujat testeille
 ${Kayttajatunnus}   testikayttaja
 ${KayttajaSalasana}  testikayttaja
 ${HOST}  localhost/markkina
@@ -9,9 +11,10 @@ ${LOGIN URL}   http://${HOST}/kirjautuminen.html
 ${LOGOUT URL}   http://${HOST}/uloskirjautuminen.php
 ${HAKU URL}    http://${HOST}/haeilmoitus.php
 ${INDEX URL}    http://${HOST}/index.php
+${LISAAILMOITUS URL}    http://${HOST}/lisaailmoitus.php
+${POISTAILMOITUS URL}   http://${HOST}/poistailmoitus.php
 
 *** Keywords ***
-
 Kirjaudu sisään
     [Documentation]   Kirjautuu sisään käyttäjätunnuksella ja salasanalla
     [Arguments]   ${tunnus}=   ${salasana}=
@@ -25,7 +28,7 @@ Kirjaudu Ulos
 
 Hae Ilmoitus
     [Documentation]   Hakee annetulla hakusanalla ilmoituksia
-    [Arguments]   ${hakusana}
+    [Arguments]   ${hakusana}= 
     Go To  ${HAKU URL}
     Input text  name=haku  ${hakusana}
     Click button  name=submit
@@ -34,7 +37,24 @@ Hae Omat Ilmoitukset
     [Documentation]    Hakee omat ilmoitukset
     Go To    ${INDEX URL}
     Click link    link=Omat ilmoitukset
+Lisää Myydään Ilmoitus
+    [Documentation]    Lisää ilmoituksen annetuilla argumenteilla
+    [Arguments]    ${ilmoitusNimi}=    ${ilmoitusSeloste}= 
+    Go To    ${LISAAILMOITUS URL}
+    Input Text    name=ilmoitus_nimi   ${ilmoitusNimi}
+    Input Text    name=ilmoitus_kuvaus   ${ilmoitusSeloste}
+    Click button    name=lahetaIlmoitus
 
+Lisää Ostetaan Ilmoitus
+    [Documentation]    Lisää ilmoituksen annetuilla argumenteilla
+    [Arguments]    ${ilmoitusNimi}=    ${ilmoitusSeloste}=
+    Go To    ${LISAAILMOITUS URL}
+    Input Text    name=ilmoitus_nimi   ${ilmoitusNimi}
+    Input Text    name=ilmoitus_kuvaus   ${ilmoitusSeloste}
+    Select From List By Value    name=ilmoitus_laji    2
+    Click button    name=lahetaIlmoitus
+Poista Ilmoitus
+    [Documentation]    Poistaa valitun ilmoituksen
 
 Aloita Testi
     Open Browser    http://localhost/markkina/    chrome

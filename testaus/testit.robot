@@ -1,10 +1,12 @@
 *** Settings ***
+Metadata    Tekijä    Jani Luostarinen
 Resource    resources/common.resource
-Force Tags  test
+Force Tags    test
 Suite Setup    Aloita Testi
 Suite Teardown    Lopeta Testi
 
 *** Test Cases ***
+# Testataan kirjautumiseen liittyvät toiminnot
 Kirjautuminen Onnistuu Tunnuksilla
     Kirjaudu sisään    ${Kayttajatunnus}    ${KayttajaSalasana}
 Kirjautuminen Ei Onnistu väärillä tunnuksilla
@@ -22,10 +24,9 @@ Uloskirjautuminen Toimii
 Uloskirjautuminen Ei Tapahdu Ilman Sisäänkirjautumista
     Kirjaudu Ulos
     Page Should Contain    Et ole kirjautunut sisään.
-
+# Testataan haku toiminnot
 Haku Toimii
     Hae Ilmoitus   Testi
-
 Haku tyhjennys Toimii
     Hae Ilmoitus    Testi
     Click link    link=Tyhjennä haku
@@ -34,3 +35,12 @@ Hae Omat Ilmoitukset Toimii
     Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
     Hae Omat Ilmoitukset
     Page Should Contain    Omat ilmoitukset:
+# Testataan ilmoituksen lisäys ja poistaminen
+Lisää Myydään Ilmoitus Toimii
+    Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
+    Lisää Myydään Ilmoitus  ilmoitusNimi  ilmoitusSeloste
+    Page Should Contain    Ilmoituksen lisääminen onnistui!
+Lisää Ostetaan Ilmoitus Toimii
+    Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
+    Lisää Ostetaan Ilmoitus  ilmoitusNimi  ilmoitusSeloste Ilmoitus
+    Page Should Contain    Ilmoituksen lisääminen onnistui!
