@@ -2,9 +2,12 @@
 session_start();
 include("kantayhteys.php");
 
-ini_set("display_errors", 1);
-ini_set("display_startup_errors", 1);
-error_reporting(E_ALL);
+if ($DEBUG_TILA) {
+    ini_set("display_errors", 1);
+    ini_set("display_startup_errors", 1);
+    error_reporting(E_ALL);
+}
+
 
 // Jos sivunumeroa ei ole pyydetty, asetetaan se oletusarvona 1
 $sivuNumero = (!isset($_GET["sivu"])) ? 1: (int)$_GET["sivu"];
@@ -98,7 +101,7 @@ $hakuAlku = ($sivuNumero-1) * $ilmoituksiaSivulla;
                         <td>
                             <div class='nappirivi'>
                             <form action='poistailmoitus.php' method='post'>
-                                <input type='submit' value='Poista'>
+                                <input type='submit' name='Poista $ilmoitus_nimi' value='Poista'>
                                 <input type='hidden' name='poista' value='1'>
                                 <input type='hidden' name='poista_id' value='$ilmoitus_id'>
                             </form>

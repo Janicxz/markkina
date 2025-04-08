@@ -16,6 +16,12 @@ $kayttaja_salasana = mysqli_real_escape_string($dbconnect, $_POST["kayttaja_sala
 // Hashataan käyttäjän salasana MD5:lla, ei turvallinen!
 //$kayttaja_salasana = md5($kayttaja_salasana);
 
+if ($DEBUG_TILA) {
+    ini_set("display_errors", 1);
+    ini_set("display_startup_errors", 1);
+    error_reporting(E_ALL);
+}
+
 // Kutsuttu rekisteröitymislomakkeesta
 if ($sivu == 0) {
     $kayttaja_sposti = $dbconnect->real_escape_string($_POST["kayttaja_sposti"]);

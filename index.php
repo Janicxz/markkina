@@ -1,6 +1,12 @@
 <?php
 session_start();
 include("kantayhteys.php");
+
+if ($DEBUG_TILA) {
+    ini_set("display_errors", 1);
+    ini_set("display_startup_errors", 1);
+    error_reporting(E_ALL);
+}
 ?>
 
 <!DOCTYPE html>

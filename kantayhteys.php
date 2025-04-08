@@ -3,6 +3,9 @@ $servername = "localhost";
 $username = "markkina";
 $password = "markkina";
 $database = "markkina";
+
+$DEBUG_TILA = false;
+
 try {
     $dbconnect = mysqli_connect($servername, $username, $password, $database);
 } catch (Exception $e) {
