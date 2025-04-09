@@ -19,17 +19,19 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
         $ilmoitus_nimi = $_POST["ilmoitus_nimi"];
         $ilmoitus_kuvaus = $_POST["ilmoitus_kuvaus"];
         $ilmoitus_paivays = $_POST["ilmoitus_paivays"];
+        $ilmoitus_sijainti = $_POST["ilmoitus_sijainti"];
         $myyja_id = $_POST["myyja_id"];
 
+        $ilmoitus_sijainti = explode(",", $ilmoitus_sijainti);
         if (!empty($ilmoitus_laji) && !empty($ilmoitus_nimi)
-        && !empty($ilmoitus_kuvaus) && !empty($ilmoitus_paivays) && !empty($myyja_id)) {
-            $stmt = mysqli_prepare($dbconnect, "INSERT INTO ilmoitukset (ilmoitus_laji, ilmoitus_nimi, ilmoitus_kuvaus, ilmoitus_paivays, myyja_id)
-            VALUES (?, ?, ?, ?, ?)");
-            mysqli_stmt_bind_param($stmt, "isssi", $ilmoitus_laji, $ilmoitus_nimi, $ilmoitus_kuvaus, $ilmoitus_paivays, $myyja_id);
+        && !empty($ilmoitus_kuvaus) && !empty($ilmoitus_paivays)
+        && !empty($myyja_id) && !empty($ilmoitus_sijainti) && count($ilmoitus_sijainti) == 2) {
+            $stmt = mysqli_prepare($dbconnect, "INSERT INTO ilmoitukset (ilmoitus_laji, ilmoitus_nimi, ilmoitus_kuvaus, ilmoitus_paivays, ilmoitus_sijainti_lev, ilmoitus_sijainti_pit, myyja_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?)");
+            mysqli_stmt_bind_param($stmt, "isssddi", $ilmoitus_laji, $ilmoitus_nimi, $ilmoitus_kuvaus, $ilmoitus_paivays, $ilmoitus_sijainti[0], $ilmoitus_sijainti[1], $myyja_id);
             mysqli_execute($stmt);
-            //mysqli_query($dbconnect, "INSERT INTO ilmoitukset (ilmoitus_laji, ilmoitus_nimi, ilmoitus_kuvaus, ilmoitus_paivays, myyja_id)
-            //VALUES ('$ilmoitus_laji', '$ilmoitus_nimi', '$ilmoitus_kuvaus', '$ilmoitus_paivays', '$myyja_id')");
             echo "Ilmoituksen lisääminen onnistui! Palaa <a href='index.php'>etusivulle</a>.";
+            //echo "lisättiin sijainti " . $ilmoitus_sijainti[0] . ", " . $ilmoitus_sijainti[1];
         }
         else {
             echo "Jätit tietoja täyttämättä. Ole hyvä ja <a href='lisaailmoitus.php'>täytä lomake uudestaan</a>.";

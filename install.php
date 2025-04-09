@@ -13,6 +13,8 @@ CREATE TABLE `ilmoitukset` (
     `ilmoitus_nimi` text NOT NULL,
     `ilmoitus_kuvaus` text NOT NULL,
     `ilmoitus_paivays` date NOT NULL,
+    `ilmoitus_sijainti_lev` decimal(10,8) NOT NULL,
+    `ilmoitus_sijainti_pit` decimal(10,8) NOT NULL,
     `myyja_id` int(6) NOT NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
   CREATE TABLE `kayttajat` (

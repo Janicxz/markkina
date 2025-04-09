@@ -76,10 +76,22 @@ if ($DEBUG_TILA) {
         $ilmoitus_kuvaus = $row["ilmoitus_kuvaus"];
         $ilmoitus_paivays = $row["ilmoitus_paivays"];
         $ilmoitus_oikeapaivays = date("d-m-Y", strtotime($ilmoitus_paivays));
+        $ilmoitus_sijainti_lev = $row["ilmoitus_sijainti_lev"];
+        $ilmoitus_sijainti_pit = $row["ilmoitus_sijainti_pit"];
         $myyja_id = $row["myyja_id"];
         $myyja_tunnus = $row["kayttaja_tunnus"];
         $myyja_sahkoposti = $row["kayttaja_sahkoposti"];
 
+
+        $ilmoitus_sijainti_tr = "";
+        if ($ilmoitus_sijainti_lev != 0 && $ilmoitus_sijainti_pit != 0) {
+            $ilmoitus_sijainti_tr = "
+            <tr>
+                <td>
+                    <a href='kartta.php?ilmoitus_id=$ilmoitus_id&lev=$ilmoitus_sijainti_lev&pit=$ilmoitus_sijainti_pit' target='_blank'>Katso sijainti kartalla</a>
+                </td>
+            </tr>";
+        }
 
         $poista_ilmoitus_tr = "";
         if ((isset($_SESSION["kayttaja_id"]) && $_SESSION["kayttaja_id"] == $myyja_id) ||
@@ -122,6 +134,7 @@ if ($DEBUG_TILA) {
                 <tr>
                     <td><a href='mailto:$myyja_sahkoposti'>$myyja_sahkoposti</a></td>
                 </tr>
+                $ilmoitus_sijainti_tr
                 $poista_ilmoitus_tr
             </table>
         ";
