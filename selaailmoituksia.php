@@ -100,7 +100,7 @@ $hakuAlku = ($sivuNumero-1) * $ilmoituksiaSivulla;
                     $ilmoitus_sijainti_tr = "
                     <tr>
                         <td>
-                            <a href='kartta.php?ilmoitus_id=$ilmoitus_id&lev=$ilmoitus_sijainti_lev&pit=$ilmoitus_sijainti_pit' target='_blank'>Katso sijainti kartalla</a>
+                            <a href='kartta.php?ilmoitus_id=$ilmoitus_id&lev=$ilmoitus_sijainti_lev&pit=$ilmoitus_sijainti_pit' target='_blank' name='ilmoitus_sijainti'>Katso sijainti kartalla</a>
                         </td>
                     </tr>";
                 }

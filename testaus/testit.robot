@@ -39,19 +39,45 @@ Hae Omat Ilmoitukset Toimii
 Lisää Myydään Ilmoitus Toimii
     Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
     Lisää Myydään Ilmoitus  ilmoitusMyydäänNimi  ilmoitusSeloste
+    Wait Until Page Contains    Ilmoituksen lisääminen onnistui!
     Page Should Contain    Ilmoituksen lisääminen onnistui!
 Lisää Ostetaan Ilmoitus Toimii
     Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
     Lisää Ostetaan Ilmoitus  ilmoitusOstetaanNimi  ilmoitusSeloste Ilmoitus
+    Wait Until Page Contains    Ilmoituksen lisääminen onnistui!
     Page Should Contain    Ilmoituksen lisääminen onnistui!
+Lisää Ilmoitus Sijainnilla Toimii
+    Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
+    Lisaa Ilmoitus Sijainnilla  ilmoitusSijaintiNimi  ilmoitusSeloste
+    Wait Until Page Contains    Ilmoituksen lisääminen onnistui!
+    Page Should Contain    Ilmoituksen lisääminen onnistui!
+    Poista Ilmoitus  ilmoitusSijaintiNimi
 Poista Myydään Ilmoitus Toimii
     Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
     Poista Ilmoitus  ilmoitusMyydäänNimi
+    Wait Until Page Contains    Ilmoitus poistettu!
     Page Should Contain    Ilmoitus poistettu!
 Poista Ostetaan Ilmoitus Toimii
     Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
     Poista Ilmoitus  ilmoitusOstetaanNimi
+    Wait Until Page Contains    Ilmoitus poistettu!
     Page Should Contain    Ilmoitus poistettu!
 Poista Ilmoitus Ei Toimi Ilman Kirjautumista
     Go To    ${POISTAILMOITUS URL}
+    Wait Until Page Contains    Ilmoitusta ei voitu poistaa!
     Page Should Contain    Ilmoitusta ei voitu poistaa!
+Näytä Ilmoitus Kartalla Toimii
+    # Lisätään ilmoitus jossa on sijainti
+    Kirjaudu Sisään   ${Kayttajatunnus}    ${KayttajaSalasana}
+    Lisaa Ilmoitus Sijainnilla  ilmoitusSijaintiNimi  ilmoitusSeloste
+    Wait Until Page Contains    Ilmoituksen lisääminen onnistui!
+    Page Should Contain    Ilmoituksen lisääminen onnistui!
+    Hae Omat Ilmoitukset
+    Click link    name=ilmoitus_sijainti
+    Switch Window    title=Ilmoituksen sijainti kartalla
+    Wait Until Page Contains Element    ilmoitusOtsikko
+    Poista Ilmoitus  ilmoitusSijaintiNimi
+
+Näytä Ilmoitus Kartalla Ei Toimi Ilman Syotteita
+    Nayta Ilmoitus Kartalla
+    Wait Until Page contains Element    ilmoitusVirheOtsikko

@@ -43,11 +43,11 @@ if (isset($ilmoitus_sijainti)) {
         <input type="hidden" id="ilmoitus_id" value="<?php echo $ilmoitus_id; ?>">
         <input type="hidden" id="ilmoitus_sijainti_lev" value="<?php echo $ilmoitus_sijainti[0]; ?>">
         <input type="hidden" id="ilmoitus_sijainti_pit" value="<?php echo $ilmoitus_sijainti[1]; ?>">
-        <h3>Ilmoituksen sijainti</h3>
+        <h3 id="ilmoitusOtsikko">Ilmoituksen sijainti</h3>
         <div id="kartta"></div>
         
     <?php else: ?>
-        <h3>Ilmoitusta ei löytynyt.</h3>
+        <h3 id="ilmoitusVirheOtsikko">Ilmoitusta ei löytynyt.</h3>
     <?php endif; ?>
     <a href="index.php">Palaa etusivulle.</a>
     <script src="kartta.js"></script>
