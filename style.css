@@ -12,3 +12,9 @@ table {
     flex-wrap: nowrap;
     gap: 10px;
 }
+/* Lisääilmoitus.php */
+/* Kartta div */
+#kartta {
+    height: 580px;
+    width: 900px;
+}
