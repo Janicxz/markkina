@@ -10,8 +10,9 @@ if ($DEBUG_TILA) {
 if (isset($_REQUEST["ilmoitus_id"]) && !empty($_REQUEST["ilmoitus_id"]) &&
     isset($_REQUEST["lev"]) && !empty($_REQUEST["lev"]) &&
     isset($_REQUEST["pit"]) && !empty($_REQUEST["pit"])) {
-    $ilmoitus_id = $_REQUEST["ilmoitus_id"];
-    $ilmoitus_sijainti = [$_REQUEST["lev"], $_REQUEST["pit"]];
+    $ilmoitus_id = htmlspecialchars($_REQUEST["ilmoitus_id"]);
+    $ilmoitus_sijainti = [htmlspecialchars($_REQUEST["lev"]), htmlspecialchars($_REQUEST["pit"])];
+
 }
 /*
 if (isset($ilmoitus_id)) {
