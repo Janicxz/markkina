@@ -50,10 +50,10 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
     }
     // Muokkaa ilmoitusta
     if ($sivu == 2) {
-        $ilmoitus_uusilaji = $_POST["ilmoitus_uusilaji"];
-        $ilmoitus_uusinimi = $_POST["ilmoitus_uusinimi"];
-        $ilmoitus_uusikuvaus = $_POST["ilmoitus_uusikuvaus"];
-        $ilmoitus_id = $_POST["ilmoitus_id"];
+        $ilmoitus_uusilaji = tarkistaTeksti($_POST["ilmoitus_uusilaji"]);
+        $ilmoitus_uusinimi = tarkistaTeksti($_POST["ilmoitus_uusinimi"]);
+        $ilmoitus_uusikuvaus = tarkistaTeksti($_POST["ilmoitus_uusikuvaus"]);
+        $ilmoitus_id = (int)$_POST["ilmoitus_id"];
 
         if (!empty($ilmoitus_uusilaji) && !empty($ilmoitus_uusinimi)
         && !empty($ilmoitus_uusikuvaus) && !empty($ilmoitus_id)) {
