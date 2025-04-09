@@ -1,9 +1,11 @@
 // Keskittää kartan käyttäjän sijaintiin jos sijaintitiedot on saatavilla
 const haeSijainti = () => {
     if (navigator.geolocation && kartta !== null) {
-        navigator.geolocation.getCurrentPosition((pos) => {
-            asetaSijainti([pos.coords.latitude, pos.coords.longitude]);
-        });
+        if (document.getElementById("ilmoitusSijaintiNayta").checked) {
+            navigator.geolocation.getCurrentPosition((pos) => {
+                asetaSijainti([pos.coords.latitude, pos.coords.longitude]);
+            });
+        }
     }
 }
 const asetaSijainti = (sijainti) => {

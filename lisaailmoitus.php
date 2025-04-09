@@ -58,9 +58,15 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
                 <td>Kohteen kuvaus:</td>
                 <td><textarea name='ilmoitus_kuvaus' rows='5' cols='80'></textarea></td>
             </tr>
-                        <tr>
+            <tr>
                 <td>Kohteen sijainti:</td>
                 <td><input id='ilmoitusSijainti' name='ilmoitus_sijainti' type='text' size='50'></td>
+            </tr>
+            <tr>
+                <td>
+                    <input id='ilmoitusSijaintiNayta' name='ilmoitus_sijainti_nayta' type='checkbox' onClick='haeSijainti();'>
+                    <label for='ilmoitusSijaintiNayta'>Näytä ilmoituksen sijainti kartalla</label>
+                </td>
             </tr>
             <tr>
                 <td><input type='submit' name='lahetaIlmoitus' value='Lähetä'></td>

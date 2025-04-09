@@ -20,8 +20,13 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
         $ilmoitus_kuvaus = $_POST["ilmoitus_kuvaus"];
         $ilmoitus_paivays = $_POST["ilmoitus_paivays"];
         $ilmoitus_sijainti = $_POST["ilmoitus_sijainti"];
+        $ilmoitus_sijainti_nayta = isset($_POST["ilmoitus_sijainti_nayta"]);
         $myyja_id = $_POST["myyja_id"];
 
+        // Käyttäjä ei halua sijaintia näkyviin kartalla, asetetaan 0,0 sijainniksi
+        if (!$ilmoitus_sijainti_nayta) {
+            $ilmoitus_sijainti = "0,0";
+        }
         $ilmoitus_sijainti = explode(",", $ilmoitus_sijainti);
         if (!empty($ilmoitus_laji) && !empty($ilmoitus_nimi)
         && !empty($ilmoitus_kuvaus) && !empty($ilmoitus_paivays)
