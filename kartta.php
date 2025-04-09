@@ -37,18 +37,19 @@ if (isset($ilmoitus_sijainti)) {
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
      <link rel="stylesheet" href="style.css">
-     <script src="kartta.js"></script>
 </head>
 <body>
     <?php if (isset($ilmoitus_id) && isset($ilmoitus_sijainti)): ?>
         <input type="hidden" id="ilmoitus_id" value="<?php echo $ilmoitus_id; ?>">
-        <input type="hidden" id="ilmoitus_sijainti" value="<?php echo $ilmoitus_sijainti; ?>">
+        <input type="hidden" id="ilmoitus_sijainti_lev" value="<?php echo $ilmoitus_sijainti[0]; ?>">
+        <input type="hidden" id="ilmoitus_sijainti_pit" value="<?php echo $ilmoitus_sijainti[1]; ?>">
         <h3>Ilmoituksen sijainti</h3>
         <div id="kartta"></div>
         
     <?php else: ?>
         <h3>Ilmoitusta ei löytynyt.</h3>
-        <a href="index.php">Palaa etusivulle.</a>
     <?php endif; ?>
+    <a href="index.php">Palaa etusivulle.</a>
+    <script src="kartta.js"></script>
 </body>
 </html>

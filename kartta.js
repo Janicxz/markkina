@@ -8,6 +8,15 @@ const asetaSijainti = (sijainti) => {
         kartta.setView(ilmoituksenSijainti, zoom);
         // Päivitetään markerin sijainti
         karttaMarker.setLatLng(ilmoituksenSijainti);
+        console.log("Asetettiin ilmoituksen sijainti: " + sijainti);
+    }
+}
+
+const haeIlmoituksenSijainti = () => {
+    let leveys = parseFloat(document.getElementById("ilmoitus_sijainti_lev").value);
+    let pituus = parseFloat(document.getElementById("ilmoitus_sijainti_pit").value);
+    if (!isNaN(leveys) && !isNaN(pituus)) {
+        asetaSijainti([leveys, pituus]);
     }
 }
 
@@ -23,7 +32,7 @@ const sivuLatautunut = () => {
     // Oletusasetukset kartalle, sijainti Helsinki, zoom taso 10
     var mapOptions = {
         center: ilmoituksenSijainti,
-        zoom: 10
+        zoom: 15
      }
      kartta = new L.map('kartta', mapOptions);
      // Lisätään openstreetmap karttataso
@@ -35,9 +44,6 @@ const sivuLatautunut = () => {
      }
      karttaMarker = L.marker(ilmoituksenSijainti, markerAsetukset);
      karttaMarker.addTo(kartta);
-     // Kun karttaa klikataan, asetetaan ilmoituksen sijainti klikattuun kohtaan
-     kartta.on('click', (e) => {
-            asetaSijainti([e.latlng.lat, e.latlng.lng]);
-     })
+     haeIlmoituksenSijainti();
 }
  addEventListener('DOMContentLoaded',sivuLatautunut);
