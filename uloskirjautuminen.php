@@ -4,7 +4,6 @@ include("kantayhteys.php");
 ?>
 
 <?php
-// DEBUG, poista kun sivu toimii
 if ($DEBUG_TILA) {
     ini_set("display_errors", 1);
     ini_set("display_startup_errors", 1);
