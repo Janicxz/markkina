@@ -2,12 +2,21 @@
 const haeSijainti = () => {
     if (navigator.geolocation && kartta !== null) {
         navigator.geolocation.getCurrentPosition((pos) => {
-            ilmoituksenSijainti = [pos.coords.latitude, pos.coords.longitude];
-            kartta.setView(ilmoituksenSijainti, 10);
-            karttaMarker.setLatLng(ilmoituksenSijainti);
-
-            document.getElementById("ilmoitusSijainti").value = ilmoituksenSijainti;
+            asetaSijainti([pos.coords.latitude, pos.coords.longitude]);
         });
+    }
+}
+const asetaSijainti = (sijainti) => {
+    if (sijainti !== null) {
+        ilmoituksenSijainti = sijainti;
+        // Haetaan käyttäjän asettama zoom taso
+        let zoom = kartta.getZoom();
+        // Asetetaan kartan näkymä sijaintiin
+        kartta.setView(ilmoituksenSijainti, zoom);
+        // Päivitetään markerin sijainti
+        karttaMarker.setLatLng(ilmoituksenSijainti);
+        // Päivitetään input kentän arvo
+        document.getElementById("ilmoitusSijainti").value = ilmoituksenSijainti;
     }
 }
 
@@ -31,7 +40,15 @@ const sivuLatautunut = () => {
      // Lisätään openstreetmap karttataso
      var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
      kartta.addLayer(layer);
-     karttaMarker = L.marker(ilmoituksenSijainti, {draggable: 'true'});
+     let markerAsetukset = {
+        title: "Ilmoituksen sijainti",
+         /*{draggable: 'true'}*/ // Jos halutaan että käyttäjä voi vetää markeria
+     }
+     karttaMarker = L.marker(ilmoituksenSijainti, markerAsetukset);
      karttaMarker.addTo(kartta);
+     // Kun karttaa klikataan, asetetaan ilmoituksen sijainti klikattuun kohtaan
+     kartta.on('click', (e) => {
+            asetaSijainti([e.latlng.lat, e.latlng.lng]);
+     })
 }
  addEventListener('DOMContentLoaded',sivuLatautunut);
