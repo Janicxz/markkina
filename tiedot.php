@@ -23,7 +23,7 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION['LOGGEDIN'] == 1) {
     echo "Uusi sähköpostiosoite: <input name='kayttaja_uusisahkoposti' type='email' value='$sahkoposti'> <br>";
     echo "<input type='hidden' name='kayttaja_tunnus' value='$_SESSION[kayttaja_tunnus]'>";
     echo "<input type='hidden' name='lomaketunnistin' value='2'>";
-    echo "<p><input type='submit' value'Muuta'></p>";
+    echo "<p><input type='submit' value='Muuta'></p>";
     echo "</form>";
     echo "<a href='index.php'>Palaa etusivulle</a>";
 }
