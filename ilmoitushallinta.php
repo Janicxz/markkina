@@ -2,6 +2,12 @@
 session_start();
 include("kantayhteys.php");
 
+function tarkistaTeksti($teksti) {
+    if (empty($teksti)) return "";
+
+    return htmlspecialchars($teksti, ENT_QUOTES, "UTF-8");
+}
+
 // DEBUG
 if ($DEBUG_TILA) {
     ini_set("display_errors", 1);
@@ -15,13 +21,13 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
     $sivu = $_POST["lomaketunnistin"];
     // Lisää ilmoitus
     if ($sivu == 1) {
-        $ilmoitus_laji = $_POST["ilmoitus_laji"];
-        $ilmoitus_nimi = $_POST["ilmoitus_nimi"];
-        $ilmoitus_kuvaus = $_POST["ilmoitus_kuvaus"];
-        $ilmoitus_paivays = $_POST["ilmoitus_paivays"];
-        $ilmoitus_sijainti = $_POST["ilmoitus_sijainti"];
+        $ilmoitus_laji = tarkistaTeksti($_POST["ilmoitus_laji"]);
+        $ilmoitus_nimi = tarkistaTeksti($_POST["ilmoitus_nimi"]);
+        $ilmoitus_kuvaus = tarkistaTeksti($_POST["ilmoitus_kuvaus"]);
+        $ilmoitus_paivays = tarkistaTeksti($_POST["ilmoitus_paivays"]);
+        $ilmoitus_sijainti = tarkistaTeksti($_POST["ilmoitus_sijainti"]);
         $ilmoitus_sijainti_nayta = isset($_POST["ilmoitus_sijainti_nayta"]);
-        $myyja_id = $_POST["myyja_id"];
+        $myyja_id = tarkistaTeksti($_POST["myyja_id"]);
 
         // Käyttäjä ei halua sijaintia näkyviin kartalla, asetetaan 0,0 sijainniksi
         if (!$ilmoitus_sijainti_nayta) {
