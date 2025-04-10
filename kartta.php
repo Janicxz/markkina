@@ -10,9 +10,36 @@ if ($DEBUG_TILA) {
 if (isset($_REQUEST["ilmoitus_id"]) && !empty($_REQUEST["ilmoitus_id"]) &&
     isset($_REQUEST["lev"]) && !empty($_REQUEST["lev"]) &&
     isset($_REQUEST["pit"]) && !empty($_REQUEST["pit"])) {
-    $ilmoitus_id = htmlspecialchars($_REQUEST["ilmoitus_id"]);
+    $ilmoitus_id = htmlspecialchars(string: $_REQUEST["ilmoitus_id"]);
     $ilmoitus_sijainti = [htmlspecialchars($_REQUEST["lev"]), htmlspecialchars($_REQUEST["pit"])];
+    
+    $query = "SELECT * FROM ilmoitukset WHERE ilmoitus_id = ?";
+    $stmt = mysqli_prepare($dbconnect, $query);
+    mysqli_stmt_bind_param($stmt, "i", $ilmoitus_id);
+    mysqli_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if ($result) {
+        $row = mysqli_fetch_assoc($result);
+        $ilmoitus_id = $row["ilmoitus_id"];
+        $ilmoitus_laji = $row["ilmoitus_laji"];
+        $ilmoitus_kuvaus = $row["ilmoitus_kuvaus"];
 
+        if (false == $ilmoitus_laji) {
+            echo mysqli_error($dbconnect);
+        }
+
+        if ($ilmoitus_laji == 1) {
+            $ilmoitus_laji = "Myydään";
+        }
+        if ($ilmoitus_laji == 2) {
+            $ilmoitus_laji = "Ostetaan";
+        }
+        $ilmoitus_nimi = $row["ilmoitus_nimi"];
+    } 
+    else {
+        // Tyhjennetään ilmoitus id muuttuja, jolloin käyttäjälle näytetään virheilmoitus ettei ilmoitusta löytynyt.
+        $ilmoitus_id = null;
+    }
 }
 /*
 if (isset($ilmoitus_id)) {
@@ -42,9 +69,11 @@ if (isset($ilmoitus_sijainti)) {
 <body>
     <?php if (isset($ilmoitus_id) && isset($ilmoitus_sijainti)): ?>
         <input type="hidden" id="ilmoitus_id" value="<?php echo $ilmoitus_id; ?>">
+        <input type="hidden" id="ilmoitus_nimi" value="<?php echo $ilmoitus_laji . " " . $ilmoitus_nimi; ?>">
+        <input type="hidden" id="ilmoitus_kuvaus" value="<?php echo $ilmoitus_kuvaus ?>">
         <input type="hidden" id="ilmoitus_sijainti_lev" value="<?php echo $ilmoitus_sijainti[0]; ?>">
         <input type="hidden" id="ilmoitus_sijainti_pit" value="<?php echo $ilmoitus_sijainti[1]; ?>">
-        <h3 id="ilmoitusOtsikko">Ilmoituksen sijainti</h3>
+        <h3 id="ilmoitusOtsikko">Ilmoituksen <?php echo "\"". $ilmoitus_laji . " " . $ilmoitus_nimi . "\""?> sijainti</h3>
         <div id="kartta"></div>
         
     <?php else: ?>

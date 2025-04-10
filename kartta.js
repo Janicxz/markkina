@@ -43,6 +43,7 @@ const sivuLatautunut = () => {
          /*{draggable: 'true'}*/ // Jos halutaan että käyttäjä voi vetää markeria
      }
      karttaMarker = L.marker(ilmoituksenSijainti, markerAsetukset);
+     karttaMarker.bindPopup("<b>" + document.getElementById("ilmoitus_nimi").value + "</b> <br> " + document.getElementById("ilmoitus_kuvaus").value);
      karttaMarker.addTo(kartta);
      haeIlmoituksenSijainti();
 }
