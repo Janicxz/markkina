@@ -58,12 +58,14 @@ if ($DEBUG_TILA) {
     }
 
     $num = mysqli_num_rows($result);
+    echo "<div class='ilmoitukset'>";
     $i = 0;
     while ($i < $num) {
         $row = mysqli_fetch_assoc($result);
         echo luoIlmoitusTable($row, $i);
         $i++;
     }
+    echo "</div>";
     ?>
     <script src="index.js"></script>
 </body>

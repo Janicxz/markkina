@@ -46,8 +46,8 @@ $hakuAlku = ($sivuNumero-1) * $ilmoituksiaSivulla;
 </head>
 <body>
     
-    <br> (<a href='index.php'>Palaa etusivulle</a>).
-    <div id="ilmoitukset"> 
+    <br> <p>(<a href='index.php'>Palaa etusivulle</a>)</p>
+    <div id="ilmoitukset" class="ilmoitukset"> 
         <h2>
             <?php
             if ($naytaVainOmat) {

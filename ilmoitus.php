@@ -72,7 +72,7 @@ function luoIlmoitusTable($row, $i) {
     }
 
     $uusi_table .= "
-        <table width='500'>
+        <table class='ilmoitusTable'>
             <tr>
                 <td bgcolor='#AABBCC'>
                     <b>$ilmoitus_laji: $ilmoitus_nimi</b>
