@@ -75,5 +75,5 @@ echo "
 <input type='hidden' name='ilmoitus_id' value='$ilmoitus_id'>
 
 </form>
-<p><a href='index.php'>Palaa edelliselle sivulle</a>.</p>";
+<p><a href='index.php'>Palaa etusivulle sivulle</a>.</p>";
 ?>
