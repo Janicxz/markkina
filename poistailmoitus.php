@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("kantayhteys.php");
+include ("kuvahallinta.php");
 
 // DEBUG
 if ($DEBUG_TILA) {
@@ -27,7 +28,7 @@ if (!isset($_SESSION["kayttaja_salasana"])) {
 
 if (isset($poista) && isset($ilmoitus_id)) {
     // Haetaan poistettavan ilmoituksen tiedot
-    $stmt = mysqli_prepare($dbconnect, "SELECT kayttajat.kayttaja_id FROM ilmoitukset INNER JOIN kayttajat ON ilmoitukset.myyja_id = kayttajat.kayttaja_id  WHERE ilmoitus_id = ?");
+    $stmt = mysqli_prepare($dbconnect, "SELECT kayttajat.kayttaja_id, ilmoitukset.ilmoitus_kuva FROM ilmoitukset INNER JOIN kayttajat ON ilmoitukset.myyja_id = kayttajat.kayttaja_id  WHERE ilmoitus_id = ?");
     mysqli_stmt_bind_param($stmt, "i", $ilmoitus_id);
     mysqli_stmt_execute($stmt);
 
@@ -42,6 +43,13 @@ if (isset($poista) && isset($ilmoitus_id)) {
         mysqli_execute($stmt);
     
         //$query = mysqli_query($dbconnect, "DELETE FROM ilmoitukset WHERE ilmoitus_id = $ilmoitus_id");
+        // Yritetään poistaa ilmoituksessa lisätty kuva
+        try {
+            kuvaPoista($row["ilmoitus_kuva"]);
+        }
+        catch (Exception $ex) {
+            echo $ex->getMessage() ."<br>";
+        }
         echo "Ilmoitus poistettu! <a href='index.php'>Palaa etusivulle</a>.";
     }
     else {

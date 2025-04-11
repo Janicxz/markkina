@@ -35,7 +35,7 @@ $ilmoitus_aika = date("Y-m-d");
 <?php
 if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
     $myyja_id = $_SESSION["kayttaja_id"];
-    echo "<form action='ilmoitushallinta.php' method='post'>";
+    echo "<form action='ilmoitushallinta.php' method='post'  enctype='multipart/form-data'>";
     echo "<h3>Lisää ilmoitus</h3>";
     echo "
     <table>
@@ -66,6 +66,14 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
                 <td>
                     <input id='ilmoitusSijaintiNayta' name='ilmoitus_sijainti_nayta' type='checkbox' onClick='haeSijainti();'>
                     <label for='ilmoitusSijaintiNayta'>Näytä ilmoituksen sijainti kartalla</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for='ilmoitus_kuva'>Valitse kuva: </label>
+                </td>
+                <td>
+                    <input id='lisaaKuva' name='ilmoitus_kuva' type='file' accept='image/png, image/jpeg, image/webp'>
                 </td>
             </tr>
             <tr>

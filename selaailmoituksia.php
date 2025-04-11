@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("kantayhteys.php");
+include("kuvahallinta.php");
 
 if ($DEBUG_TILA) {
     ini_set("display_errors", 1);
@@ -91,10 +92,24 @@ $hakuAlku = ($sivuNumero-1) * $ilmoituksiaSivulla;
                 $ilmoitus_oikeapaivays = date("d-m-Y", strtotime($ilmoitus_paivays));
                 $ilmoitus_sijainti_lev = $row["ilmoitus_sijainti_lev"];
                 $ilmoitus_sijainti_pit = $row["ilmoitus_sijainti_pit"];
+                $ilmoitus_kuva = $row["ilmoitus_kuva"];
                 $myyja_id = $row["myyja_id"];
                 $myyja_tunnus = $row["kayttaja_tunnus"];
                 $myyja_sahkoposti = $row["kayttaja_sahkoposti"];
                 
+                $ilmoitus_kuva_tr = "";
+                if (!empty($ilmoitus_kuva)) {
+                    $tiedostoKuva = kuvaHae($ilmoitus_kuva);
+                    if (file_exists($tiedostoKuva)) {
+                        $ilmoitus_kuva_tr = "
+                        <tr>
+                            <td>
+                                <img src='$tiedostoKuva' name='ilmoitus_kuva' class='ilmoitus_kuva'>
+                            </td>
+                        </tr>";
+                    }
+                }
+
                 $ilmoitus_sijainti_tr = "";
                 if ($ilmoitus_sijainti_lev != 0 && $ilmoitus_sijainti_pit != 0) {
                     $ilmoitus_sijainti_tr = "
@@ -146,6 +161,7 @@ $hakuAlku = ($sivuNumero-1) * $ilmoituksiaSivulla;
                         <tr>
                             <td><a href='mailto:$myyja_sahkoposti'>$myyja_sahkoposti</a></td>
                         </tr>
+                        $ilmoitus_kuva_tr
                         $ilmoitus_sijainti_tr
                         $poista_ilmoitus_tr
                     </table>

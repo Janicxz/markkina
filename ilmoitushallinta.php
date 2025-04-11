@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("kantayhteys.php");
+include ("kuvahallinta.php");
 
 function tarkistaTeksti($teksti) {
     if (empty($teksti)) return "";
@@ -27,7 +28,16 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
         $ilmoitus_paivays = tarkistaTeksti($_POST["ilmoitus_paivays"]);
         $ilmoitus_sijainti = tarkistaTeksti($_POST["ilmoitus_sijainti"]);
         $ilmoitus_sijainti_nayta = isset($_POST["ilmoitus_sijainti_nayta"]);
+        $ilmoitus_kuva = "";
         $myyja_id = tarkistaTeksti($_POST["myyja_id"]);
+
+        try {
+            $ilmoitus_kuva = kuvaLisaa();
+        } catch( Exception $ex) {
+            echo "Virhe: " . $ex->getMessage() . "<br>";
+            echo "Palaa <a href='index.php'>etusivulle</a>.";
+            return;
+        }
 
         // Käyttäjä ei halua sijaintia näkyviin kartalla, asetetaan 0,0 sijainniksi
         if (!$ilmoitus_sijainti_nayta) {
@@ -37,9 +47,11 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
         if (!empty($ilmoitus_laji) && !empty($ilmoitus_nimi)
         && !empty($ilmoitus_kuvaus) && !empty($ilmoitus_paivays)
         && !empty($myyja_id) && !empty($ilmoitus_sijainti) && count($ilmoitus_sijainti) == 2) {
-            $stmt = mysqli_prepare($dbconnect, "INSERT INTO ilmoitukset (ilmoitus_laji, ilmoitus_nimi, ilmoitus_kuvaus, ilmoitus_paivays, ilmoitus_sijainti_lev, ilmoitus_sijainti_pit, myyja_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?)");
-            mysqli_stmt_bind_param($stmt, "isssddi", $ilmoitus_laji, $ilmoitus_nimi, $ilmoitus_kuvaus, $ilmoitus_paivays, $ilmoitus_sijainti[0], $ilmoitus_sijainti[1], $myyja_id);
+            $stmt = mysqli_prepare($dbconnect, "INSERT INTO ilmoitukset (ilmoitus_laji, ilmoitus_nimi, ilmoitus_kuvaus, ilmoitus_paivays, ilmoitus_sijainti_lev, ilmoitus_sijainti_pit, ilmoitus_kuva, myyja_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            mysqli_stmt_bind_param($stmt, "isssddsi", $ilmoitus_laji, $ilmoitus_nimi, 
+            $ilmoitus_kuvaus, $ilmoitus_paivays, $ilmoitus_sijainti[0], $ilmoitus_sijainti[1], 
+            $ilmoitus_kuva, $myyja_id);
             mysqli_execute($stmt);
             echo "Ilmoituksen lisääminen onnistui! Palaa <a href='index.php'>etusivulle</a>.";
             //echo "lisättiin sijainti " . $ilmoitus_sijainti[0] . ", " . $ilmoitus_sijainti[1];
@@ -57,7 +69,7 @@ if (isset($_SESSION['LOGGEDIN']) && $_SESSION["LOGGEDIN"] == 1) {
 
         if (!empty($ilmoitus_uusilaji) && !empty($ilmoitus_uusinimi)
         && !empty($ilmoitus_uusikuvaus) && !empty($ilmoitus_id)) {
-    
+
             // Haetaan muokattavan ilmoituksen tiedot
             $stmt = mysqli_prepare($dbconnect, "SELECT kayttajat.kayttaja_id FROM ilmoitukset INNER JOIN kayttajat ON ilmoitukset.myyja_id = kayttajat.kayttaja_id  WHERE ilmoitus_id = ?");
             mysqli_stmt_bind_param($stmt, "i", $ilmoitus_id);
