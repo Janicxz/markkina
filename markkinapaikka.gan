@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Staff organizer" company="" webLink="http://" view-date="2025-02-01" view-index="0" gantt-divider-location="649" resource-divider-location="300" version="3.3.3316" locale="en_US">
+    <description/>
+    <view zooming-state="default:10" id="gantt-chart">
+        <field id="tpd3" name="Name" width="428" order="0"/>
+        <field id="tpd4" name="Begin date" width="80" order="1"/>
+        <field id="tpd5" name="End date" width="140" order="2"/>
+        <field id="tpd15" name="Notes" width="20" order="3"/>
+        <option id="filter.completedTasks" value="false"/>
+        <option id="filter.dueTodayTasks" value="false"/>
+        <option id="filter.overdueTasks" value="false"/>
+        <option id="filter.inProgressTodayTasks" value="false"/>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="22" uid="57efbd77105d4fd0b07354d31afa54e7" name="Vaatimusten määrittely" meeting="false" start="2025-04-30" duration="20" complete="0" expand="true">
+            <depend id="32" type="2" difference="0" hardness="Strong"/>
+            <task id="83" uid="9ea34afb3a5a42aeb995bb4cb45f50fc" name="Esitutkimus" meeting="false" start="2025-04-30" duration="5" complete="0" expand="true">
+                <depend id="81" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="81" uid="89bf2ce51ea7478db9d17d8d680ac069" name="Vaatimusten määrittely" meeting="false" start="2025-05-07" duration="5" complete="0" expand="true">
+                <depend id="34" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="34" uid="39cf8e07b9964eaf8c6f6e2a4efcabea" name="Käyttäjätutkimus" meeting="false" start="2025-05-14" duration="10" complete="0" expand="true"/>
+        </task>
+        <task id="23" uid="712bb1749dcd40d6a9621c628f1ff5f9" name="Suunnittelu" meeting="false" start="2025-05-28" duration="20" complete="0" expand="true">
+            <depend id="35" type="2" difference="0" hardness="Strong"/>
+            <task id="32" uid="79f06e6707b044d4aa06bab740a51693" name="Interaktiosuunnittelu" meeting="false" start="2025-05-28" duration="10" complete="0" expand="true">
+                <depend id="31" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="31" uid="1b797e7234dc4c9da8ba096dc07b176a" name="Graafinen suunnittelu" meeting="false" start="2025-06-11" duration="10" complete="0" expand="true"/>
+        </task>
+        <task id="24" uid="27c3aeda18f6430c8cbf6b8576cccca8" name="Toteutus" meeting="false" start="2025-06-25" duration="55" complete="0" expand="true">
+            <depend id="26" type="2" difference="0" hardness="Strong"/>
+            <task id="35" uid="daa91694c3054561b630d897b293153c" name="Prototyypin toteutus" meeting="false" start="2025-06-25" duration="10" complete="0" expand="true">
+                <depend id="33" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="33" uid="830d4e210a9d49618e8caf238a096154" name="Käytettävyystestaus" meeting="false" start="2025-07-09" duration="5" complete="18" expand="true">
+                <depend id="84" type="2" difference="0" hardness="Strong"/>
+                <depend id="85" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="86" uid="b89dc334de614f89b673d3f4e83c6fa3" name="Koodaus" meeting="false" start="2025-07-16" duration="40" complete="0" expand="true">
+                <task id="84" uid="6015fcc11da94f3b80ceacc21fff1f6a" name="Frontend" meeting="false" start="2025-07-16" duration="40" complete="0" expand="true"/>
+                <task id="85" uid="8112ef0e27354bab8234d4b71da429ec" name="Backend" meeting="false" start="2025-07-16" duration="40" complete="0" expand="true"/>
+            </task>
+        </task>
+        <task id="26" uid="981c0a18c7794d8ca763d13c40c14a87" name="Testaus" meeting="false" start="2025-09-10" duration="15" complete="0" expand="true">
+            <depend id="27" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="27" uid="b98470fe5c1d4e97837614f0e2aa4453" name="Ylläpito" meeting="false" start="2025-10-01" duration="15" complete="0" expand="true"/>
+    </tasks>
+    <resources>
+        <resource id="0" name="Jani" function="Default:0" contacts="" phone=""/>
+        <resource id="1" name="Roman" function="Default:0" contacts="" phone=""/>
+        <resource id="2" name="Jarkko" function="Default:0" contacts="" phone=""/>
+    </resources>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>
